@@ -1,4 +1,5 @@
 <script lang="ts">
+	const API_KEY: string = '8fdfb33b017b44198ae181451231109';
 	const BASE_URL: string = 'https://api.weatherapi.com/v1';
 	const ENDPOINT: string = 'current.json';
 	let weatherInfo: any = null;
@@ -10,7 +11,7 @@
 			isLoading = true;
 			const resp = await (
 				await fetch(
-					`${BASE_URL}/${ENDPOINT}?q=${query}&key=${import.meta.env.VITE_WEATHER_API_KEY}`
+					`${BASE_URL}/${ENDPOINT}?q=${query}&key=${API_KEY}`
 				)
 			).json();
 			weatherInfo = resp;
