@@ -102,7 +102,7 @@
 				</h1>
 				<h1 class="text-9xl font-extrabold">
 					Please enter a
-					<span class="text-primary">valid</span> location
+					<span class="text-primary">valid</span> area
 				</h1>
 			</div>
 		{/if}
