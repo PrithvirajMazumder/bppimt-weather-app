@@ -16,9 +16,11 @@
 	const fetchWeatherInfo = async (query: string) => {
 		try {
 			isLoading = true;
+			//calling api of current weather info
 			const respWeatherInfo = await (
 				await fetch(`${BASE_URL}/${ENDPOINT}?q=${query}&key=${API_KEY}&&aqi=yes`)
 			).json();
+			//calling api of forecast weather info
 			const respForecast = await (
 				await fetch(`${BASE_URL}/${FORECAST_ENDPOINT}?q=${query}&days=5&key=${API_KEY}&&aqi=yes`)
 			).json();
@@ -37,9 +39,6 @@
 		}
 	};
 
-	$: {
-		console.log('weatherInfo: ', weatherInfo);
-	}
 </script>
 
 <div class="container mx-auto">
