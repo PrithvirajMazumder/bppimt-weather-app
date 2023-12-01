@@ -182,7 +182,7 @@
 		{#if !weatherInfo}
 			<div>
 				<h1 class="text-9xl font-extrabold">
-					Please enter a
+					Please enter an
 					<span class="text-primary">area</span>
 				</h1>
 			</div>
