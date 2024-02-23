@@ -2,7 +2,7 @@
 	import { AQUSDefraIndex } from '$lib/constants/AQUSDefraIndex';
 	import { onMount } from 'svelte';
 
-	const API_KEY: string = '8fdfb33b017b44198ae181451231109';
+	const API_KEY: string = 'b41e3c03abb0422dbfa192407242102';
 	const BASE_URL: string = 'https://api.weatherapi.com/v1';
 	const ENDPOINT: string = 'current.json';
 	const FORECAST_ENDPOINT: string = 'forecast.json';
