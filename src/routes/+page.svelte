@@ -61,10 +61,6 @@
 			isHourlyForecastLoading = false;
 		}
 	};
-
-	$: {
-		console.log('hourlyForecast: ', hourlyForecast);
-	}
 </script>
 
 <div class="container mx-auto">
