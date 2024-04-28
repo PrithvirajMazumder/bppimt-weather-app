@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { AQUSDefraIndex } from '$lib/constants/AQUSDefraIndex';
-	import { onMount } from 'svelte';
+	import { format } from 'date-fns';
 
-	const API_KEY: string = 'b41e3c03abb0422dbfa192407242102';
+	const API_KEY: string = 'fa026116b11a4b7ca30194511242704';
 	const BASE_URL: string = 'https://api.weatherapi.com/v1';
 	const ENDPOINT: string = 'current.json';
 	const FORECAST_ENDPOINT: string = 'forecast.json';
@@ -12,6 +12,8 @@
 	let forecast: any = null;
 	let isLoading: boolean;
 	let hasError: unknown;
+	let isHourlyForecastLoading: boolean = false;
+	let hourlyForecast: any[] = [];
 
 	const fetchWeatherInfo = async (query: string) => {
 		try {
@@ -39,6 +41,30 @@
 		}
 	};
 
+	const fetchHourlyForecast = async (query: string) => {
+		hourlyForecast = [];
+		try {
+			isHourlyForecastLoading = true;
+			const resp = await Promise.all(
+				new Array(24).fill(0).map(async (_, index) => {
+					return await (
+						await fetch(
+							`${BASE_URL}/${FORECAST_ENDPOINT}?q=${query}&days=1&hour=${index}&key=${API_KEY}&&aqi=yes`
+						)
+					).json();
+				})
+			);
+			hourlyForecast = resp;
+		} catch (error) {
+			alert('Something went wrong');
+		} finally {
+			isHourlyForecastLoading = false;
+		}
+	};
+
+	$: {
+		console.log('hourlyForecast: ', hourlyForecast);
+	}
 </script>
 
 <div class="container mx-auto">
@@ -52,6 +78,8 @@
 			on:submit|preventDefault={(event) => {
 				// @ts-ignore
 				fetchWeatherInfo(event?.target?.weatherQuery?.value);
+				// @ts-ignore
+				fetchHourlyForecast(event?.target?.weatherQuery?.value);
 			}}
 			class="flex-none gap-2"
 		>
@@ -106,6 +134,23 @@
 					</h1>
 				</div>
 
+				<h3 class="text-lg font-bold mt-12">Hourly forecast</h3>
+				<div class="border p-8 rounded-lg flex items-center gap-4 w-full overflow-x-scroll" style="width: 100svh;">
+					{#each hourlyForecast as hourly}
+						<div class="border p-4 rounded-md flex flex-col min-w-[8rem] items-center">
+							<p class="font-bold">
+								{format(new Date(hourly?.forecast?.forecastday[0]?.hour[0]?.time ?? ''), 'h aa')}
+							</p>
+							<img
+							class="h-[5rem] w-[5rem]"
+								src={hourly?.forecast?.forecastday[0]?.hour[0]?.condition?.icon}
+								alt="Weather condition icon"
+							/>
+							<p class="font-bold text-lg">{hourly?.forecast?.forecastday[0]?.hour[0]?.temp_c}</p>
+						</div>
+					{/each}
+				</div>
+
 				<h3 class="text-lg font-bold mt-12">Air Quality Index</h3>
 				<div class="border p-8 rounded-lg">
 					{#if weatherInfo}
@@ -156,7 +201,7 @@
 					{/if}
 				</div>
 				<h3 class="text-lg font-bold mt-8">Forecast</h3>
-				<div class="flex w-full gap-4 ">
+				<div class="flex w-full gap-4">
 					<div class="flex-1 rounded-lg border px-8 py-4 flex items-center gap-4">
 						{#if forecast}
 							{#each forecast.forecastday as day}
