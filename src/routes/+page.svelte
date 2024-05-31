@@ -16,7 +16,6 @@
 	let forecast: any = null;
 	let isLoading: boolean;
 	let hasError: unknown;
-	let isHourlyForecastLoading: boolean = false;
 	let hourlyForecast: any[] = [];
 	let savedLocations: string[] = [];
 	let currentLocation: string;
@@ -51,7 +50,6 @@
 	const fetchHourlyForecast = async (query: string) => {
 		hourlyForecast = [];
 		try {
-			isHourlyForecastLoading = true;
 			const resp = await Promise.all(
 				new Array(24).fill(0).map(async (_, index) => {
 					return await (
@@ -64,8 +62,6 @@
 			hourlyForecast = resp;
 		} catch (error) {
 			alert('Something went wrong');
-		} finally {
-			isHourlyForecastLoading = false;
 		}
 	};
 
@@ -272,6 +268,14 @@
 							{/if}
 						</div>
 					</div>
+					{#if weatherInfo}
+						<h3 class="text-2xl">Windy Map</h3>
+						<div>
+							<iframe width="650" height="450"
+											src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=100&overlay=radar&product=radar&level=surface&lat={weatherInfo?.location?.lat}&lon={weatherInfo?.location?.lon}&pressure=true&message=true"
+											frameborder="0" />
+						</div>
+					{/if}
 				</div>
 			{/if}
 			{#if !weatherInfo}
