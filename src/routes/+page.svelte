@@ -92,10 +92,14 @@
 	<div class="absolute bg-black/60 w-full h-full top-0 left-0" />
 	<div class="drawer lg:drawer-open">
 		<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-		<div class="drawer-content pt-6 p-2 md:p-0 md:pr-6 text-gray-200 relative">
+		<div class="drawer-content md:pt-6 p-2 md:p-0 md:pr-6 text-gray-200 relative">
 			<!-- Page content here -->
-			<div class="navbar bg-glass-morphic px-6">
+			<div class="navbar bg-glass-morphic px-6 w-full flex items-center">
 				<h1 class="text-xl">BPPIMT Weather</h1>
+				<label for="my-drawer-2" class="md:hidden btn btn-ghost ml-auto pr-0"><svg class="w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+					<path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
+				</svg>
+				</label>
 			</div>
 			<div class="h-[calc(100svh-5.5rem)] flex gap-6 w-full items-start py-6">
 				<div class="w-[100svw] md:w-[calc(100svw-45rem)] overflow-y-scroll h-full">
@@ -356,7 +360,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="drawer-side p-6 hidden md:block">
+		<div class="drawer-side md:p-6">
 			<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
 			<ul class="menu p-4 w-60 min-h-full text-base-100 rounded-xl bg-glass-morphic">
 				<!-- Sidebar content here -->
