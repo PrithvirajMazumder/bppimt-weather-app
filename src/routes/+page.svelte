@@ -216,11 +216,11 @@
 						<div class="flex gap-4 overflow-x-scroll">
 							<div class="bg-glass-morphic p-4 w-full">
 								<p class="️text-sm text-gray-300/30 mb-4">💨 Wind</p>
-								<h3 class="text-5xl">{weatherInfo?.current?.wind_kph}</h3>
+								<h3 class="text-5xl">{weatherInfo?.current?.wind_kph}Kph</h3>
 							</div>
 							<div class="bg-glass-morphic p-4 w-full">
 								<p class="️text-sm text-gray-300/30 mb-4">💧 Humidity</p>
-								<h3 class="text-5xl">{weatherInfo?.current?.humidity}</h3>
+								<h3 class="text-5xl">{weatherInfo?.current?.humidity}%</h3>
 							</div>
 							<div class="bg-glass-morphic p-4 w-full">
 								<p class="️text-sm text-gray-300/30 mb-4">📏 Pressure(in)</p>
@@ -228,7 +228,7 @@
 							</div>
 							<div class="bg-glass-morphic p-4 w-full">
 								<p class="️text-sm text-gray-300/30 mb-4">🌧️ Precipitation</p>
-								<h3 class="text-5xl">{weatherInfo?.current?.precip_mm}</h3>
+								<h3 class="text-5xl">{weatherInfo?.current?.precip_mm}mm</h3>
 							</div>
 						</div>
 						<div class="border p-8 rounded-lg w-full mt-6 bg-glass-morphic">
