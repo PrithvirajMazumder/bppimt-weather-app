@@ -86,21 +86,21 @@
 	});
 </script>
 
-<div class="relative w-[100svw] h-[100svh]">
+<div class="relative w-[100vw] h-[100vh]">
 	<img alt="Weather condition background images" src={clearNightImage}
 			 class="absolute top-0 left-0 w-full h-full object-cover" />
 	<div class="absolute bg-black/60 w-full h-full top-0 left-0" />
 	<div class="drawer lg:drawer-open">
 		<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-		<div class="drawer-content pt-6 pr-6 text-gray-200 relative">
+		<div class="drawer-content pt-6 p-2 md:p-0 md:pr-6 text-gray-200 relative">
 			<!-- Page content here -->
 			<div class="navbar bg-glass-morphic px-6">
 				<h1 class="text-xl">BPPIMT Weather</h1>
 			</div>
 			<div class="h-[calc(100svh-5.5rem)] flex gap-6 w-full items-start py-6">
-				<div class="w-[calc(100svw-45rem)] overflow-y-scroll h-full">
+				<div class="w-[100svw] md:w-[calc(100svw-45rem)] overflow-y-scroll h-full">
 					<div class="flex gap-4 items-end -mb-8">
-						<h1 class="text-4xl text-gray-300/70 break-all"><span class="text-sm">Current condition ☁ at</span>
+						<h1 class="text-xl md:text-4xl text-gray-300/70 break-all"><span class="text-sm">Current condition ☁ at</span>
 							<br>{weatherInfo?.location?.name}, {weatherInfo?.location?.region}</h1>
 						<button class="btn btn-xs capitalize btn-ghost mb-2" on:click={() => {
 							saveLocation(currentLocation)
@@ -122,8 +122,69 @@
 						</button>
 
 					</div>
-					<h1 class="text-[6rem] break-words my-16 leading-[1]">{weatherInfo?.current?.condition?.text}</h1>
-					<div class="flex gap-4">
+					<h1 class="text-6xl md:text-[6rem] break-words my-10 md:my-16 leading-[1]">{weatherInfo?.current?.condition?.text}</h1>
+					<div class="mb-6 bg-glass-morphic p-6 block md:hidden">
+						<h1 class="text-6xl font-semibold mb-8">
+							{weatherInfo?.current?.temp_c}°c
+						</h1>
+						<p class="text-lg -mt-6">Feels like {weatherInfo?.current?.feelslike_c}°c</p>
+						<span class="bg-glass-morphic my-4 !rounded-[50px] w-full px-3 py-1 flex items-center">Wind 💨 direction <span
+							class="font-semibold mx-1">{weatherInfo?.current?.wind_dir}</span></span>
+						<div class="flex flex-col w-full gap-4">
+							{#if forecast}
+								{#each forecast.forecastday as day}
+									<div class="flex items-center w-full gap-2">
+										<div class="h-12 w-12 flex flex-col justify-center items-center bg-glass-morphic">
+											<img
+												class="h-8 w-8"
+												src={day?.day?.condition?.icon}
+												alt={day?.day?.condition?.text}
+											/>
+										</div>
+										<div>
+											<h3 class="text-md text-gray-300">
+												{daysOfWeek[new Date(day.date).getDay()]}
+											</h3>
+											<h3 class="text-xs text-gray-300/50">{day?.day?.condition?.text}</h3>
+
+										</div>
+
+										<h3 class="text-md font-semibold text-gray-300 ml-auto">{Math.trunc(day?.day?.avgtemp_c ?? 0)}
+											&deg;</h3>
+									</div>
+								{/each}
+							{/if}
+							<div class=" mt-4 w-full bg-glass-morphic p-4">
+								<div class="flex flex-col items-center w-full px-4">
+									<p class="text-gray-300/40 text-p mb-2">Sun duration</p>
+									<div class="bg-gray-300/30 h-1 rounded-full w-full relative mb-4" />
+								</div>
+								<div class="flex w-full items-center  justify-between gap-2">
+									<div class="flex flex-col items-center">
+										<svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+												 width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+											<path fill-rule="evenodd"
+														d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z"
+														clip-rule="evenodd" />
+										</svg>
+										<p class="text-gray-300">{astroInfo?.astronomy?.astro?.sunrise}</p>
+									</div>
+
+									{#if astroInfo}
+										<div class="flex flex-col items-center">
+											<svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+													 height="24" fill="none" viewBox="0 0 24 24">
+												<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+															d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+											</svg>
+											<p class="text-gray-300">{astroInfo?.astronomy?.astro?.sunset}</p>
+										</div>
+									{/if}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="flex gap-4 overflow-x-scroll">
 						<div class="bg-glass-morphic p-4 w-full">
 							<p class="️text-sm text-gray-300/30 mb-4">💨 Wind</p>
 							<h3 class="text-5xl">{weatherInfo?.current?.wind_kph}</h3>
@@ -171,7 +232,7 @@
 							{/if}
 						</div>
 						{#if weatherInfo}
-							<div class="flex items-center mt-8 justify-between gap-8">
+							<div class="flex items-center mt-8 justify-between gap-8 overflow-x-scroll">
 								<div class="card w-full bg-glass-morphic shadow-xl p-4">
 									<h3 class="text-lg text-center">Carbon Monoxide</h3>
 									<h1 class="text-3xl text-center">{weatherInfo?.current?.air_quality?.co}</h1>
@@ -217,15 +278,21 @@
 
 						</div>
 					</div>
-					<div class="mt-6 bg-glass-morphic p-6 h-max w-max">
-						<iframe width="650" height="300" class="rounded-lg"
+					<div class="hidden md:block mt-6 bg-glass-morphic p-6 h-max w-full">
+						<iframe width="100%" height="300" class="rounded-lg"
+										src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=100&overlay=radar&product=radar&level=surface&lat={weatherInfo?.location?.lat}&lon={weatherInfo?.location?.lon}&pressure=true&message=true"
+										frameborder="0" />
+
+					</div>
+					<div class="block md:hidden mt-6 bg-glass-morphic p-6 h-max w-full">
+						<iframe width="100%" height="300" class="rounded-lg"
 										src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=100&overlay=radar&product=radar&level=surface&lat={weatherInfo?.location?.lat}&lon={weatherInfo?.location?.lon}&pressure=true&message=true"
 										frameborder="0" />
 
 					</div>
 				</div>
 				<div
-					class="w-96 h-full overflow-y-scroll bg-glass-morphic p-6 text-gray-300 flex flex-col items-start gap-4">
+					class="hidden md:flex w-96 h-full overflow-y-scroll bg-glass-morphic p-6 text-gray-300 flex-col items-start gap-4">
 					<h1 class="text-8xl font-semibold leading-[0] mt-12 mb-8">
 						{weatherInfo?.current?.temp_c}°c
 					</h1>
@@ -289,7 +356,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="drawer-side p-6">
+		<div class="drawer-side p-6 hidden md:block">
 			<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
 			<ul class="menu p-4 w-60 min-h-full text-base-100 rounded-xl bg-glass-morphic">
 				<!-- Sidebar content here -->
